@@ -203,6 +203,8 @@ class controller{
             include_once $this->folder . 'model.php';
             $model_name = 'model_' . $this->name;
             $controller->model = new $model_name;
+            $sql_i = sql::getInstance();
+            $controller->model->sql = $sql_i->DB;
         }
     }
     
@@ -286,4 +288,44 @@ class view{
 
         echo ob_get_clean();
     }
+}
+
+class sql{
+    
+    public $DB;
+
+    private static $instance = NULL;
+
+    public static function getInstance() {
+        if (self::$instance === NULL) {
+            self::$instance = new self;
+        }
+        return self::$instance;
+    }
+    
+    public function __construct() {
+        require_once ROOT_DIR . 'vendor/medoo/medoo.php';
+        $config = Config::getInstance();
+             
+        $DB = new medoo([
+       // required
+       'database_type' => $config->db_type,
+       'database_name' => $config->db_name,
+       'server' => $config->db_host,
+       'username' => $config->db_user,
+       'password' => $config->db_pass,
+       'charset' => $config->db_charset,
+         
+        // [optional]
+        'port' => 3306,
+         
+        // driver_option for connection, read more from http://www.php.net/manual/en/pdo.setattribute.php
+        'option' => [
+        PDO::ATTR_CASE => PDO::CASE_NATURAL
+        ]
+        ]);
+        $this->DB = $DB;
+    }    
+    
+    
 }

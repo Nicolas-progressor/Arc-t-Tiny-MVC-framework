@@ -4,16 +4,29 @@
     
     <link href="<?php echo $this->resUrl; ?>css/bootstrap.min.css" rel="stylesheet">
     
-    <title>tiny mvc sandbox</title>
+    <title>Arc-t Tiny MVC Framework</title>
 </head>
 
 <body>
-    <div class="container">
+    <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index">          
+                        <div class="brand_name">Arc-t Tiny MVC Framework</div>
+                    </a>   
+                </div>                
+            </div>            
+    </nav>
+    <div class="container">      
         <div class="jumbotron">
-            <?php echo $text; ?>
+            <p>
+                <?php echo $text; ?>
+            </p>            
         </div>
         
         <?php new controller('welcome', 'second'); ?>
+        
+        <?php new controller('second', 'index'); ?>
         
     </div>    
     
